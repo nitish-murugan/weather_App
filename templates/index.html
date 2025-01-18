@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+            padding: 50px;
+          }
+          
+          form {
+            margin: 20px 0;
+          }
+          
+          input[type="text"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+          }
+          
+          button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+          
+          .forecast-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+          }
+          
+          .forecast {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            margin: 10px;
+            width: calc(100% / 5 - 20px);
+            box-sizing: border-box;
+          }
+          
+          @media (max-width: 767px) {
+            .forecast {
+              width: calc(50% - 20px);
+            }
+          }
+          
+          @media (max-width: 480px) {
+            .forecast {
+              width: 100%;
+            }
+          }          
+    </style>
+</head>
+<body>
+    <form action="/" method="POST">
+        <label> City1: </label>
+        <input type="text" placeholder="city1" id="city1" name="city1">
+        <label> City2: </label>
+        <input type="text" placeholder="city2" id="city2" name="city2">
+        <button type="submit">Fetch Weather </button>
+    </form>
+
+    <div class="comparison-container">
+        {% if weatherData1 %}
+            <div class="city-container">
+                <h1>{{ weatherData1.name.capitalize() }}</h1>
+                <h2>{{ weatherData1.temperature }}°C</h2>
+                <p>{{ weatherData1.description.capitalize() }}</p>
+                <img src="http://openweathermap.org/img/w/{{ weatherData1.icon }}.png" alt="{{ weatherData1.description }}">
+
+
+                {% if forecastData1 %}
+                    <h2>5-Day Forecast</h2>
+                    <div class="forecast-container">
+                        {% for forecast in forecastData1 %}
+                            <div class="forecast">
+                                <h3>{{ forecast.day.capitalize() }}</h3>
+                                <p>{{ forecast.minTemp }}°C - {{ forecast.maxTemp }}°C</p>
+                                <p>{{ forecast.description.capitalize() }}</p>
+                                <img src="http://openweathermap.org/img/w/{{ forecast.icon }}.png" alt="{{ forecast.description }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if weatherData2 %}
+            <div class="city-container">
+                <h1>{{ weatherData2.name.capitalize() }}</h1>
+                <h2>{{ weatherData2.temperature }}°C</h2>
+                <p>{{ weatherData2.description.capitalize() }}</p>
+                <img src="http://openweathermap.org/img/w/{{ weatherData2.icon }}.png" alt="{{ weatherData2.description }}">
+
+                {% if forecastData2 %}
+                    <h2>5-Day Forecast</h2>
+                    <div class="forecast-container">
+                        {% for forecast in forecastData2 %}
+                            <div class="forecast">
+                                <h3>{{ forecast.day.capitalize() }}</h3>
+                                <p>{{ forecast.minTemp }}°C - {{ forecast.maxTemp }}°C</p>
+                                <p>{{ forecast.description.capitalize() }}</p>
+                                <img src="http://openweathermap.org/img/w/{{ forecast.icon }}.png" alt="{{ forecast.description }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
